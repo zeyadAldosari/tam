@@ -1,0 +1,17 @@
+services:
+  task_db:
+    container_name: task_db
+    image: postgres:17.2-alpine
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - task_data:/var/lib/postgresql/data
+
+volumes:
+  task_data:
