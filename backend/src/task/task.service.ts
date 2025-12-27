@@ -43,7 +43,7 @@ export class TaskService {
   async findUserTasks(
     userId: string,
     q?: string,
-    Status?: DBStatus,
+    status?: DBStatus,
     priority?: Priority,
   ) {
     try {
@@ -56,7 +56,7 @@ export class TaskService {
               { description: { contains: q, mode: 'insensitive' } },
             ],
           }),
-          ...(Status && { Status }),
+          ...(status && { status }),
           ...(priority && { priority }),
         },
       });

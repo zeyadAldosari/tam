@@ -72,7 +72,7 @@ const priorityOptions = [
 
 const headers = [
   { title: "Task", key: "title" },
-  { title: "Status", key: "Status", width: "120px" },
+  { title: "Status", key: "status", width: "120px" },
   { title: "Priority", key: "priority", width: "120px" },
   { title: "Updated", key: "updatedAt", width: "170px" },
   { title: "", key: "actions", sortable: false, width: "140px" },
@@ -82,7 +82,7 @@ const emptyTask = () => ({
   id: null,
   title: "",
   description: "",
-  Status: "PENDING",
+  status: "PENDING",
   priority: "MEDIUM",
 });
 
@@ -242,7 +242,7 @@ const submitTask = async () => {
   const payload = {
     title: activeTask.title.trim(),
     description: activeTask.description.trim(),
-    Status: activeTask.Status,
+    status: activeTask.status,
     priority: activeTask.priority,
   };
 
@@ -319,16 +319,10 @@ const formatDate = (value) => {
   return date.toLocaleString();
 };
 
-const statusOrder = ["PENDING", "IN_PROGRESS", "COMPLETED"];
-const nextStatus = (current) => {
-  const index = statusOrder.indexOf(current);
-  return statusOrder[(index + 1) % statusOrder.length];
-};
-
 const updateStatus = async (task, status) => {
   if (!task?.id) return;
   try {
-    await api.patch(`/task/${task.id}`, { Status: status });
+    await api.patch(`/task/${task.id}`, { status });
     notify(`Status updated to ${statusLabel(status)}.`);
     await fetchTasks();
   } catch (error) {
@@ -346,7 +340,7 @@ const updateStatus = async (task, status) => {
     <v-app-bar flat color="transparent" class="blurred-bar">
       <v-app-bar-title class="font-title text-ink">
         <v-icon icon="mdi-rocket-launch" color="primary" class="mr-2" />
-        Task Atlas
+        Task Managment
       </v-app-bar-title>
       <v-spacer></v-spacer>
       <v-chip
@@ -653,7 +647,7 @@ const updateStatus = async (task, status) => {
               <v-row dense>
                 <v-col cols="12" sm="6">
                   <v-select
-                    v-model="activeTask.Status"
+                    v-model="activeTask.status"
                     :items="statusOptions"
                     item-title="label"
                     item-value="value"

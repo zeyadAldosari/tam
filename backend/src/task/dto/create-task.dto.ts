@@ -15,5 +15,5 @@ export class CreateTaskDto {
   priority: Priority;
 
   @IsEnum(Status)
-  Status: Status;
+  status: Status;
 }

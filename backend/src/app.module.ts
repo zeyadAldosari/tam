@@ -9,9 +9,14 @@ import { UserService } from './user/user.service';
 import { TaskService } from './task/task.service';
 import { PrismaModule } from './prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'frontend'),
+    }),
     PrismaModule,
     ConfigModule.forRoot({
       isGlobal: true,

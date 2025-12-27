@@ -30,13 +30,13 @@ export class TaskController {
   findAll(
     @GetCurrentUserId() id: string,
     @Query('q') q?: string,
-    @Query('status') Status?: DBStatus,
+    @Query('status') status?: DBStatus,
     @Query('priority') priority?: Priority,
   ) {
     return this.taskService.findUserTasks(
       id,
       q,
-      Status,
+      status,
       priority,
     );
   }

@@ -23,7 +23,6 @@ export class AuthService {
   ) {}
 
   async signIn(signInDto: userSignInDto): Promise<any> {
-    console.log('JWT SECRET RUNTIME VALUE =', process.env.JWT_SECRET);
     signInDto.username = signInDto.username?.toLowerCase();
     let user: User;
 

@@ -12,6 +12,24 @@ services:
       - "5432:5432"
     volumes:
       - task_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DATABASE_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
+  nest:
+    container_name: nest
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      task_db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
 volumes:
   task_data:
